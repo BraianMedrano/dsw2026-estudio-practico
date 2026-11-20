@@ -63,8 +63,13 @@ Back = repo `dsw2026-tpi`.
     traduce el `errorCode` a un mensaje en español y normaliza `details`.
     El form (por ej. `SpecialtyForm.jsx`) hace `setError(campo, …)` por cada
     detalle, o `setError('root', …)` si no corresponde a un campo.
-19. **Back apagado.** Si el error no tiene `response`, `getApiError` devuelve
-    "No se pudo conectar con el servidor. Revisá tu conexión."
+    En las bajas, `ConfirmDialog` muestra dentro del modal el mensaje de
+    `getApiError` (por ej. 409 o 404) en vez de un error genérico.
+19. **Back apagado.** `getApiError` devuelve "No se pudo conectar con el
+    servidor. Revisá tu conexión." en dos casos: si el error no tiene
+    `response` (no hubo red) o si es un 5xx **sin** `errorCode`. El segundo
+    es el caso real en desarrollo: con el back apagado, el proxy de Vite
+    responde 500 con el cuerpo vacío.
 20. **Límites.** `FIELD_LIMITS` en `shared/helpers/inputRules.js`. El atributo
     `maxLength` del input **no deja escribir** de más; la regla de
     react-hook-form **muestra el mensaje** si igual llega un valor largo.
@@ -147,7 +152,8 @@ Back = repo `dsw2026-tpi`.
     a `ConfirmDialog` como prop `isOpen`.
 43. **Flujo unidireccional.** Los datos bajan por props (page → componente);
     los eventos suben por funciones que el padre pasa como props
-    (`onConfirm`, `onClose` de `ConfirmDialog`).
+    (`onConfirm`, `onClose` de `ConfirmDialog`, u `onCancel` de
+    `AppointmentCard`: la tarjeta no cancela nada, avisa a la page).
 44. **Inmutabilidad.** React detecta el cambio comparando referencias: si
     modificás el mismo array, la referencia no cambia y no re-renderiza.
     Por eso `usePatientAppointments.js` crea un array nuevo con `filter`.

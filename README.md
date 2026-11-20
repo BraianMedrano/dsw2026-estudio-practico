@@ -121,9 +121,11 @@ Las tres primeras son las que la rúbrica nombra textualmente. Hacé las tres.
 
 - Consigna: "en Mis turnos, mostrar una etiqueta 'Hoy' en los turnos de hoy"
   o "mostrar 'Tenés N turnos activos' solo cuando hay más de uno".
-- Dónde: las tarjetas se dibujan en el `.map` de
-  `patients/pages/AppointmentsPage.jsx`. Usá `&&` o el ternario `? :` en el
-  JSX. Para "Hoy", compará `appointment.date` con la fecha de hoy (mirá cómo
+- Dónde: la page (`patients/pages/AppointmentsPage.jsx`) hace el `.map` y
+  le pasa cada turno a `patients/components/appointments/AppointmentCard.jsx`,
+  que es la que dibuja la tarjeta. "Hoy" va en `AppointmentCard` (es un dato
+  de un turno); "Tenés N turnos activos" va en la page (es un dato de la
+  lista). Usá `&&` o el ternario `? :` en el JSX. Para "Hoy", compará `appointment.date` con la fecha de hoy (mirá cómo
   llega el formato en Network → Response antes de escribir la comparación).
 - Verificá: con un turno que cumple y otro que no. En Console, nada en rojo
   (ojo con las fechas `undefined`).

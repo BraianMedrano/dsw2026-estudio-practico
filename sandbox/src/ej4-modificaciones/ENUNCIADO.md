@@ -96,7 +96,10 @@ Response y código), **Console** limpia y `npm run build` sin errores.
   irían el `useState` y el `.filter`) y
   `src/modules/appointments/hooks/useAppointmentSearch.js` (filtros en el back)
 - Modificación 3 → el ternario cargando / error / vacío / lista de
-  `AppointmentsPage.jsx` y `StatusBadge` en `shared/components`
+  `AppointmentsPage.jsx`, la tarjeta en
+  `src/modules/patients/components/appointments/AppointmentCard.jsx` (igual
+  que acá: recibe el turno y `onCancel`) y `StatusBadge` en
+  `shared/components`
 
 Después pasá al ejercicio 5 del `README.md`: las mismas consignas, pero sobre
 el TPI.
