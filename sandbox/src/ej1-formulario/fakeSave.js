@@ -7,6 +7,7 @@ export function fakeSave(values) {
     setTimeout(() => {
       if (values.name?.toLowerCase() === 'caido') {
         reject(new Error('Network Error'));
+
         return;
       }
 
@@ -17,10 +18,13 @@ export function fakeSave(values) {
             data: {
               errorCode: 'VALIDATION_ERROR',
               message: 'Validation failed',
-              details: [{ field: 'Dni', issue: 'Ya existe un paciente con ese DNI.' }],
+              details: [
+                { field: 'Dni', issue: 'Ya existe un paciente con ese DNI.' },
+              ],
             },
           },
         });
+
         return;
       }
 

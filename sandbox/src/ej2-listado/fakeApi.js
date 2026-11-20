@@ -1,5 +1,14 @@
 // Simula GET /api/patients paginado. NO lo modifiques.
-const FIRST = ['Ana', 'Bruno', 'Carla', 'Diego', 'Elena', 'Facundo', 'Gala', 'Hugo'];
+const FIRST = [
+  'Ana',
+  'Bruno',
+  'Carla',
+  'Diego',
+  'Elena',
+  'Facundo',
+  'Gala',
+  'Hugo',
+];
 const LAST = ['Pérez', 'Gómez', 'Díaz', 'López', 'Sosa'];
 
 const PATIENTS = Array.from({ length: 37 }, (_, i) => {
@@ -18,11 +27,15 @@ export function getPatients({ pageIndex = 0, pageSize = 10, name = '' }) {
     setTimeout(() => {
       if (localStorage.getItem('backendDown')) {
         reject(new Error('Network Error'));
+
         return;
       }
 
       if (name && name.length < 3) {
-        reject({ response: { status: 400, data: { errorCode: 'VALIDATION_ERROR' } } });
+        reject({
+          response: { status: 400, data: { errorCode: 'VALIDATION_ERROR' } },
+        });
+
         return;
       }
 

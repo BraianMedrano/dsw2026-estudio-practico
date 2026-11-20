@@ -1,4 +1,8 @@
-import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom';
+import {
+  createBrowserRouter,
+  Navigate,
+  RouterProvider,
+} from 'react-router-dom';
 import Home from './Home';
 import WarmUp from './ej0-calentamiento/WarmUp';
 import PatientForm from './ej1-formulario/PatientForm';

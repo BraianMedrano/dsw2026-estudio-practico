@@ -4,6 +4,7 @@ const STATUS_LABELS = { PENDING: 'Pendiente', CANCELLED: 'Cancelado' };
 
 function formatDate(isoDate) {
   const [year, month, day] = isoDate.split('-');
+
   return `${day}/${month}/${year}`;
 }
 
@@ -21,7 +22,7 @@ export default function AppointmentCard({ appointment, onCancel }) {
       await onCancel(appointment.id);
     } catch (requestError) {
       setCancelError(
-        requestError.response?.data?.message ?? 'No se pudo cancelar el turno.',
+        requestError.response?.data?.message ?? 'No se pudo cancelar el turno.'
       );
     } finally {
       setIsCancelling(false);

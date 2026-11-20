@@ -13,6 +13,7 @@ async function request(url, options = {}) {
   if (!response.ok) {
     // Mismo formato que un error de axios: error.response.status / .data.
     const error = new Error(body?.message ?? 'Error de la API');
+
     error.response = { status: response.status, data: body };
     throw error;
   }

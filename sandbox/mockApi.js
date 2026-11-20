@@ -9,6 +9,7 @@ const SPECIALTIES = ['Cardiología', 'Clínica médica', 'Pediatría'];
 
 function toIsoDate(daysFromToday) {
   const date = new Date();
+
   date.setDate(date.getDate() + daysFromToday);
   const pad = (value) => String(value).padStart(2, '0');
 
@@ -17,11 +18,51 @@ function toIsoDate(daysFromToday) {
 
 function createSeed() {
   return [
-    { id: 1, specialty: 'Cardiología', doctor: 'Laura Méndez', date: toIsoDate(0), startTime: '10:30', reason: 'Control anual', status: 'PENDING' },
-    { id: 2, specialty: 'Pediatría', doctor: 'Martín Ríos', date: toIsoDate(2), startTime: '09:00', reason: 'Vacunas', status: 'PENDING' },
-    { id: 3, specialty: 'Clínica médica', doctor: 'Sofía Herrera', date: toIsoDate(5), startTime: '16:15', reason: 'Dolor de cabeza', status: 'CANCELLED' },
-    { id: 4, specialty: 'Cardiología', doctor: 'Laura Méndez', date: toIsoDate(7), startTime: '11:00', reason: 'Resultados de estudios', status: 'PENDING' },
-    { id: 5, specialty: 'Clínica médica', doctor: 'Sofía Herrera', date: toIsoDate(0), startTime: '18:00', reason: 'Certificado', status: 'PENDING' },
+    {
+      id: 1,
+      specialty: 'Cardiología',
+      doctor: 'Laura Méndez',
+      date: toIsoDate(0),
+      startTime: '10:30',
+      reason: 'Control anual',
+      status: 'PENDING',
+    },
+    {
+      id: 2,
+      specialty: 'Pediatría',
+      doctor: 'Martín Ríos',
+      date: toIsoDate(2),
+      startTime: '09:00',
+      reason: 'Vacunas',
+      status: 'PENDING',
+    },
+    {
+      id: 3,
+      specialty: 'Clínica médica',
+      doctor: 'Sofía Herrera',
+      date: toIsoDate(5),
+      startTime: '16:15',
+      reason: 'Dolor de cabeza',
+      status: 'CANCELLED',
+    },
+    {
+      id: 4,
+      specialty: 'Cardiología',
+      doctor: 'Laura Méndez',
+      date: toIsoDate(7),
+      startTime: '11:00',
+      reason: 'Resultados de estudios',
+      status: 'PENDING',
+    },
+    {
+      id: 5,
+      specialty: 'Clínica médica',
+      doctor: 'Sofía Herrera',
+      date: toIsoDate(0),
+      startTime: '18:00',
+      reason: 'Certificado',
+      status: 'PENDING',
+    },
   ];
 }
 
@@ -34,6 +75,7 @@ function send(res, status, body) {
 function readBody(req) {
   return new Promise((resolve) => {
     let raw = '';
+
     req.on('data', (chunk) => {
       raw += chunk;
     });
@@ -56,21 +98,31 @@ function validate(body) {
   const details = [];
 
   if (!SPECIALTIES.includes(body.specialty)) {
-    details.push({ field: 'Specialty', issue: 'Elegí una especialidad válida.' });
+    details.push({
+      field: 'Specialty',
+      issue: 'Elegí una especialidad válida.',
+    });
   }
+
   if (isBlank(body.doctor)) {
     details.push({ field: 'Doctor', issue: 'El médico es obligatorio.' });
   }
+
   if (!/^\d{4}-\d{2}-\d{2}$/.test(body.date ?? '')) {
     details.push({ field: 'Date', issue: 'La fecha no es válida.' });
   }
+
   if (!/^\d{2}:\d{2}$/.test(body.startTime ?? '')) {
     details.push({ field: 'StartTime', issue: 'La hora no es válida.' });
   }
+
   if (isBlank(body.reason)) {
     details.push({ field: 'Reason', issue: 'El motivo es obligatorio.' });
   } else if (body.reason.length > 200) {
-    details.push({ field: 'Reason', issue: 'El motivo admite hasta 200 caracteres.' });
+    details.push({
+      field: 'Reason',
+      issue: 'El motivo admite hasta 200 caracteres.',
+    });
   }
 
   return details;
@@ -85,6 +137,7 @@ export default function mockApi() {
 
     if (req.headers.authorization !== TOKEN) {
       send(res, 401, { errorCode: 'UNAUTHORIZED', message: 'Falta el token.' });
+
       return;
     }
 
@@ -93,7 +146,15 @@ export default function mockApi() {
 
     if (req.method === 'GET' && path === '') {
       const status = url.searchParams.get('status');
-      send(res, 200, status ? appointments.filter((item) => item.status === status) : appointments);
+
+      send(
+        res,
+        200,
+        status
+          ? appointments.filter((item) => item.status === status)
+          : appointments
+      );
+
       return;
     }
 
@@ -102,7 +163,12 @@ export default function mockApi() {
       const details = validate(body);
 
       if (details.length > 0) {
-        send(res, 400, { errorCode: 'VALIDATION_ERROR', message: 'Datos inválidos.', details });
+        send(res, 400, {
+          errorCode: 'VALIDATION_ERROR',
+          message: 'Datos inválidos.',
+          details,
+        });
+
         return;
       }
 
@@ -115,8 +181,10 @@ export default function mockApi() {
         reason: body.reason.trim(),
         status: 'PENDING',
       };
+
       appointments = [...appointments, created];
       send(res, 201, created);
+
       return;
     }
 
@@ -127,17 +195,30 @@ export default function mockApi() {
       const current = appointments.find((item) => item.id === id);
 
       if (!current) {
-        send(res, 404, { errorCode: 'ENTITY_NOTFOUND', message: 'El turno no existe.' });
+        send(res, 404, {
+          errorCode: 'ENTITY_NOTFOUND',
+          message: 'El turno no existe.',
+        });
+
         return;
       }
+
       if (current.status === 'CANCELLED') {
-        send(res, 409, { errorCode: 'ALREADY_CANCELLED', message: 'El turno ya estaba cancelado.' });
+        send(res, 409, {
+          errorCode: 'ALREADY_CANCELLED',
+          message: 'El turno ya estaba cancelado.',
+        });
+
         return;
       }
 
       const updated = { ...current, status: 'CANCELLED' };
-      appointments = appointments.map((item) => (item.id === id ? updated : item));
+
+      appointments = appointments.map((item) =>
+        item.id === id ? updated : item
+      );
       send(res, 200, updated);
+
       return;
     }
 
@@ -148,7 +229,12 @@ export default function mockApi() {
     name: 'practice-mock-api',
     configureServer(server) {
       server.middlewares.use('/api/appointments', (req, res) => {
-        handle(req, res).catch(() => send(res, 500, { errorCode: 'SERVER_ERROR', message: 'Error interno.' }));
+        handle(req, res).catch(() =>
+          send(res, 500, {
+            errorCode: 'SERVER_ERROR',
+            message: 'Error interno.',
+          })
+        );
       });
     },
   };

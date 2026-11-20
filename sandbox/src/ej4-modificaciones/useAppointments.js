@@ -30,14 +30,16 @@ export default function useAppointments() {
 
   async function create(values) {
     const created = await createAppointment(values);
+
     // Inmutabilidad: un array nuevo, nunca push() sobre el actual.
     setAppointments((current) => [...current, created]);
   }
 
   async function cancel(id) {
     const updated = await cancelAppointment(id);
+
     setAppointments((current) =>
-      current.map((item) => (item.id === id ? updated : item)),
+      current.map((item) => (item.id === id ? updated : item))
     );
   }
 

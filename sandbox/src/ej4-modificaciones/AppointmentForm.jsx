@@ -37,8 +37,9 @@ export default function AppointmentForm({ onCreate }) {
 
       if (details.length > 0) {
         details.forEach(({ field, issue }) =>
-          setError(FIELD_BY_BACKEND_NAME[field] ?? 'root', { message: issue }),
+          setError(FIELD_BY_BACKEND_NAME[field] ?? 'root', { message: issue })
         );
+
         return;
       }
 

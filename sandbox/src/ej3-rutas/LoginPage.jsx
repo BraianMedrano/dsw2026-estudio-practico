@@ -15,8 +15,12 @@ export default function LoginPage() {
     <main>
       <Link to="/">← Inicio</Link>
       <h1>Login (ejercicio 3)</h1>
-      <button onClick={() => enter('ADMINISTRADOR', '/ej3/admin')}>Entrar como admin</button>{' '}
-      <button onClick={() => enter('PACIENTE', '/ej3/patient')}>Entrar como paciente</button>
+      <button onClick={() => enter('ADMINISTRADOR', '/ej3/admin')}>
+        Entrar como admin
+      </button>{' '}
+      <button onClick={() => enter('PACIENTE', '/ej3/patient')}>
+        Entrar como paciente
+      </button>
     </main>
   );
 }

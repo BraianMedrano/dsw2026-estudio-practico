@@ -6,7 +6,7 @@ Arquitectura del TPI: **service → hook → page**. La page solo dibuja.
 
 1. `usePatients.js` (custom hook): pide la página con `getPatients` en un
    `useEffect` y devuelve `{ patients, total, pageIndex, isLoading, error,
-   nextPage, previousPage }`.
+nextPage, previousPage }`.
 2. `DataTable.jsx` (reutilizable): recibe `columns` y `data` y dibuja la tabla.
    No sabe nada de pacientes.
 3. `PatientsPage.jsx`: usa el hook y la tabla; muestra "Cargando...", el error,

@@ -7,11 +7,11 @@ Completá `PatientForm.jsx` usando **react-hook-form**. No toques `fakeSave.js`
 
 ## Campos
 
-| Campo | Reglas |
-|---|---|
+| Campo  | Reglas                                                                                              |
+| ------ | --------------------------------------------------------------------------------------------------- |
 | Nombre | Obligatorio, de 3 a 100 caracteres, solo letras, espacios, `.`, `'` y `-`. No acepta solo espacios. |
-| DNI | Obligatorio, **solo números** (las letras no se pueden ni escribir), 7 u 8 dígitos. |
-| Email | Obligatorio, formato de email, hasta 150 caracteres. |
+| DNI    | Obligatorio, **solo números** (las letras no se pueden ni escribir), 7 u 8 dígitos.                 |
+| Email  | Obligatorio, formato de email, hasta 150 caracteres.                                                |
 
 ## Comportamiento
 
